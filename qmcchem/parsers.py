@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Parsers provided by qp2.
+Parsers provided by qmcchem.
 
 Register parsers via the "aiida.parsers" entry point in setup.json.
 """
@@ -14,7 +14,7 @@ from aiida.common import exceptions
 from aiida.orm import Float, RemoteData
 from aiida.orm import load_computer
 
-QpCalculation = CalculationFactory('qp2')
+QpCalculation = CalculationFactory('qmcchem')
 
 
 class QpParser(Parser):
@@ -74,7 +74,7 @@ class QpParser(Parser):
             #else:
             #    return self.exit_codes.ERROR_MISSING_ENERGY
 
-        # The ezfio tar.gz file is the REQUIRED output of the qp2 calculation
+        # The ezfio tar.gz file is the REQUIRED output of the qmcchem calculation
         # i.e. it should always be detected and stored (see below)
 
         # Get the ezfio basename and job UUID from the input parameters

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Command line interface (cli) for qp2.
+Command line interface (cli) for qmcchem.
 
 Register new commands either via the "console_scripts" entry point or plug them
 directly into the 'verdi' command by using AiiDA-specific entry points like
@@ -17,9 +17,9 @@ from aiida.plugins import DataFactory
 
 
 # See aiida.cmdline.data entry point in setup.json
-@verdi_data.group('qp2')
+@verdi_data.group('qmcchem')
 def data_cli():
-    """Command line interface for qp2"""
+    """Command line interface for qmcchem"""
 
 
 @data_cli.command('list')
@@ -28,7 +28,7 @@ def list_():  # pylint: disable=redefined-builtin
     """
     Display all QpParameters nodes
     """
-    QpParameters = DataFactory('qp2')
+    QpParameters = DataFactory('qmcchem')
 
     qb = QueryBuilder()
     qb.append(QpParameters)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-qp2
+qmcchem
 
-AiiDA plugin for the Quanum Package 2.0
+AiiDA plugin for QMC=Chem
 """
 
 __version__ = '0.1.0a'

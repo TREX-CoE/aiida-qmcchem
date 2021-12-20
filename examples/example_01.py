@@ -14,7 +14,7 @@ from aiida.common.exceptions import NotExistent
 INPUT_DIR = path.join(path.dirname(path.realpath(__file__)), 'input_files')
 
 
-def test_run_scf(qp2_code, computer):
+def test_run_scf(qmcchem_code, computer):
     """Run a calculation on the localhost computer.
 
     """
@@ -25,35 +25,35 @@ def test_run_scf(qp2_code, computer):
             raise Exception('You forgot to provide the --computer argument'
                             ) from NotExistent
 
-    if not qp2_code:
+    if not qmcchem_code:
         try:
-            qp2_code = load_code('qp2@localhost')
+            qmcchem_code = load_code('qmcchem@localhost')
         except:
             raise Exception(
                 'You forgot to provide the --code argument') from NotExistent
 
     # Prepare input parameters
     ezfio_name = 'hcn.ezfio'
-    qp2_commands = [f'set_file {ezfio_name}', 'run scf']
+    qmcchem_commands = [f'set_file {ezfio_name}', 'run scf']
 
     ezfio_tar = path.join(INPUT_DIR, f'{ezfio_name}.tar.gz')
     prepend_commands = [f'cp {ezfio_tar} .']
 
-    qp2_parameters = {
+    qmcchem_parameters = {
         'qp_prepend': prepend_commands,
-        'qp_commands': qp2_commands,
+        'qp_commands': qmcchem_commands,
         'ezfio_name': ezfio_name
     }
 
     inputs = {
-        'code': qp2_code,
-        'parameters': Dict(dict=qp2_parameters),
+        'code': qmcchem_code,
+        'parameters': Dict(dict=qmcchem_parameters),
         'metadata': {
             'computer': computer
         }
     }
 
-    result = engine.run(CalculationFactory('qp2'), **inputs)
+    result = engine.run(CalculationFactory('qmcchem'), **inputs)
     energy = float(result['output_energy'])
 
     print(f'Computed SCF energy: \n  {energy}')
@@ -66,9 +66,9 @@ def test_run_scf(qp2_code, computer):
 def cli(code, computer):
     """Run example_01: SCF calculation using QP2 on existing EZFIO database.
 
-    Example usage: $ ./example_01.py --code qp2@localhost --computer localhost
+    Example usage: $ ./example_01.py --code qmcchem@localhost --computer localhost
 
-    Alternative (loads qp2@localhost code and localhost computer): $ ./example_01.py
+    Alternative (loads qmcchem@localhost code and localhost computer): $ ./example_01.py
 
     Help: $ ./example_01.py --help
     """

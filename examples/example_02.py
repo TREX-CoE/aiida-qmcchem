@@ -16,7 +16,7 @@ INPUT_DIR = path.join(path.dirname(path.realpath(__file__)), 'input_files')
 
 
 def load_aiida_setup():
-    """Load localhost computer and qp2@localhost from the AiiDA database.
+    """Load localhost computer and qmcchem@localhost from the AiiDA database.
 
     """
     #try:
@@ -31,14 +31,14 @@ def load_aiida_setup():
         raise Exception(
             'Create the localhost computer for this example') from NotExistent
 
-    # Create or load the qp2 code
+    # Create or load the qmcchem code
     try:
-        code = orm.load_code('qp2@localhost')
+        code = orm.load_code('qmcchem@localhost')
     except NotExistent:
         # Setting up code via python API (or use "verdi code setup")
-        code = orm.Code(label='qp2',
-                        remote_computer_exec=[computer, '~/qp2/bin/qpsh'],
-                        input_plugin_name='qp2')
+        code = orm.Code(label='qmcchem',
+                        remote_computer_exec=[computer, '~/qmcchem/bin/qpsh'],
+                        input_plugin_name='qmcchem')
 
     return (code, computer)
 
@@ -46,12 +46,12 @@ def load_aiida_setup():
 def test_run_create_ezfio(code, computer):
     """Run JOB #1: create an EZFIO database from XYZ file
 
-    Runs on the localhost computer using qp2@localhost code
+    Runs on the localhost computer using qmcchem@localhost code
     """
     # Set up inputs
     builder = code.get_builder()
 
-    # COMPILE THE DICTIONARY OF QP2 PARAMETERS
+    # COMPILE THE DICTIONARY OF qmcchem PARAMETERS
     create_parameters = {
         'qp_create_ezfio': {
             'basis': '"6-31g"',
@@ -82,15 +82,15 @@ def test_run_create_ezfio(code, computer):
     # =========================================================== #
 
     builder.code = code
-    builder.metadata.description = 'Test job submission with the aiida_qp2 plugin to create an EZFIO database'
+    builder.metadata.description = 'Test job submission with the aiida_qmcchem plugin to create an EZFIO database'
     builder.metadata.computer = computer
 
     # Run the calculation & parse results
-    print('\nQP2 create_ezfio execution: STARTED\n')
+    print('\nqmcchem create_ezfio execution: STARTED\n')
 
     result = engine.run(builder)
 
-    print('\nQP2 create_ezfio execution: FINISHED\n')
+    print('\nqmcchem create_ezfio execution: FINISHED\n')
 
     ezfio_RemoteData = result['output_ezfio']
     path_to_ezfio = ezfio_RemoteData.get_remote_path()
@@ -109,7 +109,7 @@ def test_run_create_ezfio(code, computer):
 def test_run_scf_from_ezfio(code, computer, ezfio_RemoteData_inp):
     """Run JOB #2: SCF calculation on the existing EZFIO database from JOB #1
 
-    Runs on the localhost computer using qp2@localhost code
+    Runs on the localhost computer using qmcchem@localhost code
     """
     builder_scf = code.get_builder()
     #ezfio_name = 'hcn.ezfio'
@@ -123,17 +123,17 @@ def test_run_scf_from_ezfio(code, computer, ezfio_RemoteData_inp):
     ezfio_full_name = path_to_ezfio.split('/')[-1]
     ezfio_inp_name = ezfio_full_name.split('.tar.gz')[0]
 
-    qp2_commands = [f'set_file {ezfio_inp_name}', 'run scf']
+    qmcchem_commands = [f'set_file {ezfio_inp_name}', 'run scf']
 
-    # COMPILE THE DICTIONARY OF QP2 PARAMETERS
-    qp2_parameters = {
+    # COMPILE THE DICTIONARY OF qmcchem PARAMETERS
+    qmcchem_parameters = {
         'ezfio_name': ezfio_inp_name,
         'qp_prepend': prepend_commands,
-        'qp_commands': qp2_commands
+        'qp_commands': qmcchem_commands
     }
 
     # conventional QP run
-    builder_scf.parameters = orm.Dict(dict=qp2_parameters)
+    builder_scf.parameters = orm.Dict(dict=qmcchem_parameters)
     builder_scf.ezfio = ezfio_RemoteData_inp
 
     builder_scf.metadata.options.output_filename = 'qp.out'
@@ -141,14 +141,14 @@ def test_run_scf_from_ezfio(code, computer, ezfio_RemoteData_inp):
     builder_scf.metadata.options.computer = 'localhost'
 
     builder_scf.code = code
-    builder_scf.metadata.description = 'Test job submission with the aiida_qp2 plugin to run SCF calculations'
+    builder_scf.metadata.description = 'Test job submission with the aiida_qmcchem plugin to run SCF calculations'
     builder_scf.metadata.computer = computer
 
-    print('\nQP2 run_scf execution: STARTED\n')
+    print('\nqmcchem run_scf execution: STARTED\n')
 
     result = engine.run(builder_scf)
 
-    print('\nQP2 run_scf execution: FINISHED\n')
+    print('\nqmcchem run_scf execution: FINISHED\n')
 
     ezfio_RemoteData = result['output_ezfio']
     path_to_ezfio = ezfio_RemoteData.get_remote_path()
@@ -168,7 +168,7 @@ def test_run_scf_from_ezfio(code, computer, ezfio_RemoteData_inp):
 @click.command()
 @cmdline.utils.decorators.with_dbenv()
 def cli():
-    """Run example_02: execute 2 jobs using QP2 code.
+    """Run example_02: execute 2 jobs using qmcchem code.
 
     Job #1: create an EZFIO database from the existing XYZ (hcn.xyz) file using `qp create_ezfio [arguments]` command;
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Calculations provided by qp2.
+Calculations provided by qmcchem.
 
 Register calculations via the "aiida.calculations" entry point in setup.json.
 """
@@ -33,7 +33,7 @@ class QpCalculation(CalcJob):
         spec.input('settings', valid_type=Dict, required=False, help='Additional input parameters.')
         spec.input('code', valid_type=Code, required=False, help='The `Code` to use for this job.')
 
-        spec.input('metadata.options.output_filename', valid_type=str, default='aiida-qp2.out')
+        spec.input('metadata.options.output_filename', valid_type=str, default='aiida-qmcchem.out')
         # `output_ezfio_basename` and `computer` options required to store the output EZFIO tar.gz file as RemoteData node
         spec.input('metadata.options.output_ezfio_basename', valid_type=str, required=True, default='aiida.ezfio')
         spec.input('metadata.options.computer', valid_type=str, required=True, default='localhost')
@@ -43,7 +43,7 @@ class QpCalculation(CalcJob):
             'num_machines': 1,
             'num_mpiprocs_per_machine': 1,
         }
-        spec.inputs['metadata']['options']['parser_name'].default = 'qp2'
+        spec.inputs['metadata']['options']['parser_name'].default = 'qmcchem'
 
         # Output parameters
         spec.output('output_energy', valid_type=Float, required=False, help='The result of the calculation')

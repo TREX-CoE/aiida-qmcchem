@@ -11,9 +11,10 @@ def clear_database_auto(clear_database):  # pylint: disable=unused-argument
     """Automatically clear database in between tests."""
 
 
+# TODO : Fix default executable path
 @pytest.fixture(scope='function')
-def qp2_code(aiida_local_code_factory):
-    """Get a qp2 code.
+def qmcchem_code(aiida_local_code_factory):
+    """Get a qmcchem code.
     """
-    return aiida_local_code_factory(executable='/home/evgeny/qp2/bin/qpsh',
-                                    entry_point='qp2')
+    return aiida_local_code_factory(executable='/home/evgeny/qmcchem/bin/qpsh',
+                                    entry_point='qmcchem')

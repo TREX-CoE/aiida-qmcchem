@@ -1,11 +1,11 @@
-[![Build Status](https://github.com/TREX-CoE/aiida-qp2/workflows/ci/badge.svg?branch=master)](https://github.com/q-posev/aiida-qp2/actions)
-[![Coverage Status](https://coveralls.io/repos/github/TREX-CoE/aiida-qp2/badge.svg?branch=master)](https://coveralls.io/github/q-posev/aiida-qp2?branch=master)
-[![Docs status](https://readthedocs.org/projects/qp2/badge)](http://qp2.readthedocs.io/)
-[![PyPI version](https://badge.fury.io/py/qp2.svg)](https://badge.fury.io/py/qp2)
+[![Build Status](https://github.com/TREX-CoE/aiida-qmcchem/workflows/ci/badge.svg?branch=master)](https://github.com/q-posev/aiida-qmcchem/actions)
+[![Coverage Status](https://coveralls.io/repos/github/TREX-CoE/aiida-qmcchem/badge.svg?branch=master)](https://coveralls.io/github/q-posev/aiida-qmcchem?branch=master)
+[![Docs status](https://readthedocs.org/projects/aiida-qmcchem/badge)](http://aiida-qmcchem.readthedocs.io/)
+[![PyPI version](https://badge.fury.io/py/aiida-qmcchem.svg)](https://badge.fury.io/py/aiida-qmcchem)
 
-# qp2
+# aiida-qmcchem
 
-AiiDA plugin for the Quanum Package 2.0
+AiiDA plugin for QMC=Chem
 
 This plugin is the modified output of the
 [AiiDA plugin cutter](https://github.com/aiidateam/aiida-plugin-cutter),
@@ -16,12 +16,12 @@ intended to help developers get started with their AiiDA plugins.
 * [`.github/`](.github/): [Github Actions](https://github.com/features/actions) configuration
   * [`ci.yml`](.github/workflows/ci.yml): runs tests, checks test coverage and builds documentation at every new commit
   * [`publish-on-pypi.yml`](.github/workflows/publish-on-pypi.yml): automatically deploy git tags to PyPI - just generate a [PyPI API token](https://pypi.org/help/#apitoken) for your PyPI account and add it to the `pypi_token` secret of your github repository
-* [`qp2/`](qp2/): The main source code of the plugin package
-  * [`data/`](qp2/data/): A new `QpParameters` data class, used as input to the `QpCalculation` `CalcJob` class
-  * [`calculations.py`](qp2/calculations.py): A new `QpCalculation` `CalcJob` class
-  * [`cli.py`](qp2/cli.py): Extensions of the `verdi data` command line interface for the `QpParameters` class
-  * [`parsers.py`](qp2/parsers.py): A new `Parser` for the `QpCalculation`
-* [`docs/`](docs/): A documentation template ready for publication on [Read the Docs](http://aiida-qp2.readthedocs.io/en/latest/)
+* [`qmcchem/`](qmcchem/): The main source code of the plugin package
+  * [`data/`](qmcchem/data/): A new `QmcchemParameters` data class, used as input to the `QmcchemCalculation` `CalcJob` class
+  * [`calculations.py`](qmcchem/calculations.py): A new `QmcchemCalculation` `CalcJob` class
+  * [`cli.py`](qmcchem/cli.py): Extensions of the `verdi data` command line interface for the `QmcchemParameters` class
+  * [`parsers.py`](qmcchem/parsers.py): A new `Parser` for the `QmcchemCalculation`
+* [`docs/`](docs/): A documentation template ready for publication on [Read the Docs](http://aiida-qmcchem.readthedocs.io/en/latest/)
 * [`examples/`](examples/): Examples of how to submit a calculation using this plugin
 * [`tests/`](tests/): Basic regression tests using the [pytest](https://docs.pytest.org/en/latest/) framework (submitting a calculation, ...). Install `pip install -e .[testing]` and run `pytest`.
 * [`.coveragerc`](.coveragerc): Configuration of [coverage.py](https://coverage.readthedocs.io/en/latest) tool reporting which lines of your plugin are covered by tests
@@ -39,18 +39,18 @@ intended to help developers get started with their AiiDA plugins.
 
 See also the following video sequences from the 2019-05 AiiDA tutorial:
 
- * [aiida-qp2 setup.json](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=240s)
- * [run aiida-qp2 example calculation](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=403s)
- * [aiida-qp2 CalcJob plugin](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=685s)
- * [aiida-qp2 Parser plugin](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=936s)
- * [aiida-qp2 computer/code helpers](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1238s)
- * [aiida-qp2 input data (with validation)](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1353s)
- * [aiida-qp2 cli](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1621s)
- * [aiida-qp2 tests](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1931s)
+ * [aiida-qmcchem setup.json](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=240s)
+ * [run aiida-qmcchem example calculation](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=403s)
+ * [aiida-qmcchem CalcJob plugin](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=685s)
+ * [aiida-qmcchem Parser plugin](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=936s)
+ * [aiida-qmcchem computer/code helpers](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1238s)
+ * [aiida-qmcchem input data (with validation)](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1353s)
+ * [aiida-qmcchem cli](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1621s)
+ * [aiida-qmcchem tests](https://www.youtube.com/watch?v=2CxiuiA1uVs&t=1931s)
  * [Adding your plugin to the registry](https://www.youtube.com/watch?v=760O2lDB-TM&t=112s)
  * [pre-commit hooks](https://www.youtube.com/watch?v=760O2lDB-TM&t=333s)
 
-For more information, see the [developer guide](https://aiida-qp2.readthedocs.io/en/latest/developer_guide) of your plugin.
+For more information, see the [developer guide](https://aiida-qmcchem.readthedocs.io/en/latest/developer_guide) of your plugin.
 
 
 ## Features (TODO)
@@ -62,17 +62,17 @@ For more information, see the [developer guide](https://aiida-qp2.readthedocs.io
    inputs['file2'] = SinglefileData(file='/path/to/file2')
    ```
 
- * Specify command line options via a python dictionary and `QpParameters`:
+ * Specify command line options via a python dictionary and `QmcchemParameters`:
    ```python
    d = { 'ignore-case': True }
-   QpParameters = DataFactory('qp2')
-   inputs['parameters'] = QpParameters(dict=d)
+   QmcchemParameters = DataFactory('qmcchem')
+   inputs['parameters'] = QmcchemParameters(dict=d)
    ```
 
 ## Installation
 
 ```shell
-pip install qp2
+pip install aiida-qmcchem
 verdi quicksetup  # better to set up a new profile
 verdi plugin list aiida.calculations  # should now show your calclulation plugins
 ```
@@ -92,21 +92,21 @@ verdi process list -a  # check record of calculation
 
 The plugin also includes verdi commands to inspect its data types:
 ```shell
-verdi data qp2 list
-verdi data qp2 export <PK>
+verdi data qmcchem list
+verdi data qmcchem export <PK>
 ```
 
 ## Development
 
 ```shell
-git clone https://github.com/q-posev/aiida-qp2 .
-cd aiida-qp2
+git clone https://github.com/q-posev/aiida-qmcchem .
+cd aiida-qmcchem
 pip install -e .[pre-commit,testing]  # install extra dependencies
 pre-commit install  # install pre-commit hooks
 pytest -v  # discover and run all tests
 ```
 
-See the [developer guide](http://qp2.readthedocs.io/en/latest/developer_guide/index.html) for more information.
+See the [developer guide](http://aiida-qmcchem.readthedocs.io/en/latest/developer_guide/index.html) for more information.
 
 ## License
 
